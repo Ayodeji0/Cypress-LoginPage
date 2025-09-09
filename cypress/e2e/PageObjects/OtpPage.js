@@ -1,44 +1,27 @@
-class OtpPage{
-    
-    otpField(){
-        return cy.get('input [name="otp"')
-    }
 
-    submitOtpButton(){
-        return cy.contains('button', 'Verify OTP')
-    }
+class OtpPage {
 
-    resendOtpButton(){
-        return cy.contains('button', 'Resend OTP')
-    }
+  otpField(index) {
+    return cy.get(`[aria-label="Please enter OTP character ${index}"]`);
+  }
 
-    timer () {
-        return cy.get('otp-timer')
-    }
+  verifyButton() {
+    return cy.get('#login');
+  }
 
+  enterOtp(otp) {
+    // Wait for first OTP field to appear (up to 20 seconds)
+    this.otpField(1).should('be.visible', { timeout: 15000 });
 
-    //  ENTERING RANDOM OTP
+    // Enter each OTP digit
+    otp.split('').forEach((digit, index) => {
+      this.otpField(index + 1).type(digit);
+    });
+  }
 
-    enterRandomOtp(){
-    const randomOtp = Math.floor(100000 + Math.random() * 900000).toString();
-    this.otpField().clear().type(randomOtp, { delay: 200 });
-    }
-
-    enterShortOtp(){
-    this.otpField().clear().type('123');
-    }
-
-    enterLongOtp(){
-    this.otpField().clear().type('123676772');
-    }
-    
-    submitOtp(){
-        this.submitOtpButton().click()
-    }
-    loginWithRandomOtp() {
-        this.enterRandomOtp();
-        this.submitOtpButton();
-    }
+  verifyOtp() {
+    this.verifyButton().should('not.be.disabled').click();
+  }
 }
 
-module.exports = new OtpPage()
+module.exports = new OtpPage();

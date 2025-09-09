@@ -9,19 +9,23 @@ describe('Login Page Test',() => {
 
        it('login with valid', () => {
          loginPage.login('Chimezule.uchendu@gmail.com', 'Password321$')
-        OtpPage.loginWithRandomOtp()
+
+            // Generate random 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    cy.log(`Generated OTP: ${otp}`);
+
+    // Enter OTP and verify
+    OtpPage.enterOtp(otp);
+    OtpPage.verifyOtp();
+
+    // Assert successful login
+    cy.url().should('include', '/merchants-list');
+        // OtpPage.loginWithRandomOtp()
       
     })
 
-    // Login with correct credentials and enter otp
-    // it('login with shortOTP', () => {
-    //     OtpPage.enterShortOtp();
-    //     OtpPage.submitOtp()
-    //     cy.contains('Inavalid OTP').should('be.visible')
-    // })
-    // it('login with longOTP', () => {
-    //     OtpPage.enterLongOtp();
-    //     OtpPage.submitOtp()
-    //     cy.contains('Inavalid OTP').should('be.visible')
-    // })
+  
 })
+
+
+

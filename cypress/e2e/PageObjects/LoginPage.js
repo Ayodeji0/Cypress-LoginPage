@@ -1,41 +1,37 @@
+
 class LoginPage {
 
-    emailField(){
-       return cy.get('[name="email"]');
-    }
+  // Locators
+  emailField() {
+    return cy.get('[name="email"]');
+  }
 
-    passwordField(){
-       return cy.get('[name="password"]');
-    }
+  passwordField() {
+    return cy.get('[name="password"]');
+  }
 
-      loginButton(){
-       return cy.get('#login');
-    }
+  loginButton() {
+    return cy.get('#login');
+  }
 
-   //    forgotPasswordLink(){
-   //     return cy.get('#login');
-   //  }
+  // Actions
+  enterEmail(email) {
+    this.emailField().clear().type(email).blur();
+  }
 
-    //  Actions
-     enterEmail(email) {
-        this.emailField().clear().type(email)
-     }
-     enterPassword(password) {
-        this.passwordField().clear().type(password)
-     }
-     clickLogin() {
-        this.loginButton().click()
-     }
+  enterPassword(password) {
+    this.passwordField().clear().type(password).blur();
+  }
 
-     clickForgotPassword() {
-        this.forgotPasswordLink().click()
-     }
-     login(email, password){
-        this.enterEmail(email)
-        this.enterPassword(password)
-        this.clickLogin()
-     }
-  
+  clickLogin() {
+    this.loginButton().should('not.be.disabled').click();
+  }
 
+  login(email, password) {
+    this.enterEmail(email);
+    this.enterPassword(password);
+    this.clickLogin();
+  }
 }
+
 module.exports = new LoginPage();
