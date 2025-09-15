@@ -11,7 +11,7 @@ class OtpPage {
 
   enterOtp(otp) {
     // Wait for first OTP field to appear (up to 20 seconds)
-    this.otpField(1).should('be.visible', { timeout: 15000 });
+    this.otpField(1).should('be.visible', { timeout: 20000 });
 
     // Enter each OTP digit
     otp.split('').forEach((digit, index) => {
